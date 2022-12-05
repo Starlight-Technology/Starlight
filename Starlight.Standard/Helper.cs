@@ -14,7 +14,7 @@ namespace Starlight.Standard
         Task<string> EncryptPass256(string pass, string salt = null, bool isCaseSensitive = false, int? maxLength = null, int? minLength = null);
         Task<bool> IsValidEmail(string value);
         Task<bool> IsValidString(string value);
-        Task<bool> IsValidString(string value, int? maxLength = null, int? MinLength = null);
+        Task<bool> IsValidString(string value, int? maxLength = null, int? minLength = null);
     }
 
     public class Helper : IHelper
@@ -70,14 +70,17 @@ namespace Starlight.Standard
             return Task.FromResult(true);
         }
 
-        public Task<bool> IsValidString(string value, int? maxLength = null, int? MinLength = null) => MinLength.HasValue
-                                                                                     && maxLength.HasValue
-                                                                                     && maxLength <= value.Length
-                                                                                     && MinLength >= value.Length
-                                                                                     || (maxLength.HasValue && maxLength <= value.Length)
-                                                                                     || (MinLength.HasValue && MinLength >= value.Length)
-                ? IsValidString(value)
-                : Task.FromResult(false);
+        public Task<bool> IsValidString(string value, int? maxLength = null, int? minLength = null)
+        {
+            if (minLength.HasValue && value.Length >= minLength && maxLength.HasValue && value.Length <= maxLength)
+                return IsValidString(value);
+            else if (minLength.HasValue && value.Length >= minLength)
+                return IsValidString(value);
+            else if (maxLength.HasValue && value.Length <= maxLength)
+                return IsValidString(value);
+
+            return Task.FromResult(false);
+        }
 
         public Task<bool> IsValidEmail(string value)
         {
