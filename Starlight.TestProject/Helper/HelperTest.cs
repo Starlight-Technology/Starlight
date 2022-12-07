@@ -4,7 +4,7 @@ using System.Text;
 
 using XSystem.Security.Cryptography;
 
-namespace Starlight.TesteProject.Helper
+namespace Starlight.TestProject.Helper
 {
     public class HelperTest
     {
