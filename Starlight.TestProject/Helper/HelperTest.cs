@@ -1,6 +1,4 @@
-﻿using Starlight.Standard;
-
-using System.Text;
+﻿using System.Text;
 
 using XSystem.Security.Cryptography;
 
@@ -65,7 +63,6 @@ namespace Starlight.TestProject.Helper
 
             Assert.True(isStringValid, "the string must be valid!");
             Assert.True(isStringValid2, "the string must be valid! The max and min must be the same!");
-                
         }
 
         [Fact]
@@ -90,8 +87,8 @@ namespace Starlight.TestProject.Helper
             var isValidEmail = await helper.IsValidEmail(email);
 
             Assert.True(isValidEmail, "Email must be valid.");
-        }  
-        
+        }
+
         [Fact]
         public async Task IsValidEmail_False()
         {

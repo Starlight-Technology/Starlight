@@ -9,11 +9,17 @@ namespace Starlight.Standard
     public interface IHelper
     {
         Task<bool> ContainsSpecialCharacter(string value);
+
         Task<string> EncryptPass256(string pass);
+
         Task<string> EncryptPass256(string pass, string salt = null);
+
         Task<string> EncryptPass256(string pass, string salt = null, bool isCaseSensitive = false, int? maxLength = null, int? minLength = null);
+
         Task<bool> IsValidEmail(string value);
+
         Task<bool> IsValidString(string value);
+
         Task<bool> IsValidString(string value, int? maxLength = null, int? minLength = null);
     }
 
@@ -60,7 +66,6 @@ namespace Starlight.Standard
                 byte[] sha256 = new SHA256Managed().ComputeHash(senhaByte.Concat(s).ToArray());
                 return Convert.ToBase64String(sha256);
             }
-
             else
             {
                 byte[] senhaByte = Encoding.UTF8.GetBytes(pass);
@@ -121,7 +126,6 @@ namespace Starlight.Standard
             return Task.FromResult(false);
         }
 
-
         /// <summary>
         /// Verify if the string is an email
         /// </summary>
@@ -139,6 +143,5 @@ namespace Starlight.Standard
                 return Task.FromResult(false);
             }
         }
-
     }
 }

@@ -1,0 +1,34 @@
+﻿using System.Security.Claims;
+using System.Text.Json;
+
+namespace Starlight.Helper;
+
+public static class JwtParser
+{
+    private static byte[] ParseBase64WithoutPadding(string base64)
+    {
+        switch (base64.Length % 4)
+        {
+            case 2:
+                base64 += "==";
+                break;
+
+            case 3:
+                base64 += "=";
+                break;
+        }
+        return Convert.FromBase64String(base64);
+    }
+
+    public static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
+    {
+        List<Claim> claims = [];
+        string payload = jwt.Split('.')[1];
+        byte[] jsonBytes = ParseBase64WithoutPadding(payload);
+        Dictionary<string, object>? keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
+        claims.AddRange(
+            from kvp in keyValuePairs
+            select new Claim(kvp.Key, kvp.Value?.ToString() ?? string.Empty));
+        return claims;
+    }
+}

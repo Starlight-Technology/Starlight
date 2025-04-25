@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Description>helper for dbcontext</Description>
     <Version>1.2.2</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
